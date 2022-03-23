@@ -43,7 +43,7 @@ def main():
     # непосредственно за ведение диалога
     handle_dialog(request.json, response)
 
-    logging.info('Response: %r', request.json)
+    logging.info('Response: %r', response)
 
     # Преобразовываем в JSON и возвращаем
     return json.dumps(response)
@@ -82,7 +82,7 @@ def handle_dialog(req, res):
         'хорошо'
     ]:
         # Пользователь согласился, прощаемся.
-        res['response']['text'] = 'Слона можно найти на Яндекс.Маркете!'
+        res['response']['text'] = 'Слона можно найти на Яндекс Маркете!'
         res['response']['end_session'] = True
         return
 
@@ -104,7 +104,8 @@ def get_suggests(user_id):
     ]
 
     # Убираем первую подсказку, чтобы подсказки менялись каждый раз.
-    session['suggests'] = session['suggests'][1:]
+    if session['suggests']:
+        session['suggests'] = session['suggests'][1:]
     sessionStorage[user_id] = session
 
     # Если осталась только одна подсказка, предлагаем подсказку
